@@ -41,4 +41,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             counterElement.textContent = "Error";
         }
     }
+
+    // Fetch and display a random quote from ZenQuotes API
+    const quoteTextElement = document.getElementById('quote-text');
+    const quoteAuthorElement = document.getElementById('quote-author');
+    
+    if (quoteTextElement && quoteAuthorElement) {
+        try {
+            // We use a free CORS proxy since ZenQuotes restricts direct frontend requests on their free tier
+            const response = await fetch('https://corsproxy.io/?https://zenquotes.io/api/random');
+            const data = await response.json();
+            
+            if (data && data.length > 0) {
+                quoteTextElement.textContent = data[0].q;
+                quoteAuthorElement.textContent = data[0].a;
+            }
+        } catch (error) {
+            console.error("Error fetching ZenQuotes:", error);
+            quoteTextElement.textContent = "The only true wisdom is in knowing you know nothing.";
+            quoteAuthorElement.textContent = "Socrates";
+        }
+    }
 });
