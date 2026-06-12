@@ -1,8 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+import { getFirestore, doc, setDoc, getDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAlToU44il7UDEMT5mtVn6Z2d21kIClCZM",
   authDomain: "mysite-1656b.firebaseapp.com",
@@ -16,8 +18,27 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
 // Wait for the DOM to fully load before running scripts
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     console.log("Firebase telemetry initialized...");
+
+    const counterElement = document.getElementById('visit-counter');
+    if (counterElement) {
+        const docRef = doc(db, 'stats', 'page-visits');
+        try {
+            // Increment the counter by 1. Merge true ensures the document is created if it doesn't exist yet.
+            await setDoc(docRef, { count: increment(1) }, { merge: true });
+            
+            // Fetch the newly updated value and display it
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                counterElement.textContent = docSnap.data().count;
+            }
+        } catch (error) {
+            console.error("Error updating visit counter:", error);
+            counterElement.textContent = "Error";
+        }
+    }
 });
