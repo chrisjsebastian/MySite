@@ -1,38 +1,23 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAlToU44il7UDEMT5mtVn6Z2d21kIClCZM",
+  authDomain: "mysite-1656b.firebaseapp.com",
+  projectId: "mysite-1656b",
+  storageBucket: "mysite-1656b.firebasestorage.app",
+  messagingSenderId: "76852428151",
+  appId: "1:76852428151:web:7ef2361acaaf2360d0b572",
+  measurementId: "G-7Y41ERPZ0G"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 // Wait for the DOM to fully load before running scripts
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. Select the elements
-    const button = document.getElementById('action-btn');
-    const heading = document.getElementById('main-heading');
-    const subText = document.getElementById('sub-text');
-    
-    // 2. Define application state
-    let isActive = false;
-
-    // 3. Add event listener
-    button.addEventListener('click', () => {
-        isActive = !isActive; // Toggle state
-
-        if (isActive) {
-            // Update Text
-            heading.textContent = 'System Active';
-            subText.textContent = 'JavaScript successfully triggered state change.';
-            button.textContent = 'Deactivate';
-
-            // Update Tailwind Classes (Colors)
-            heading.classList.replace('text-slate-800', 'text-emerald-600');
-            button.classList.replace('bg-blue-600', 'bg-emerald-600');
-            button.classList.replace('hover:bg-blue-700', 'hover:bg-emerald-700');
-        } else {
-            // Revert Text
-            heading.textContent = 'Welcome';
-            subText.textContent = 'This is a clean, modular starting point for your project.';
-            button.textContent = 'Activate';
-
-            // Revert Tailwind Classes (Colors)
-            heading.classList.replace('text-emerald-600', 'text-slate-800');
-            button.classList.replace('bg-emerald-600', 'bg-blue-600');
-            button.classList.replace('hover:bg-emerald-700', 'hover:bg-blue-700');
-        }
-    });
+    console.log("Firebase telemetry initialized...");
 });
